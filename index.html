@@ -9,7 +9,8 @@
 <body>
     <h1>Party Planner</h1>
     <ul id = "PartyList"></ul>
-    <form id = "PartyForm">
+    <div id = "PartyForm">;
+    <form id = "newPartyForm">;
         <lable for = "partyName">Party Name</lable><br>
         <input type="text" id = "partyName" required><br>
 
@@ -25,9 +26,10 @@
         <lable for = "description">Description</lable><br>
         <input type="text" id = "description" required><br>
 
-        <button type="button" onclick="Addparty()"> Add Party</button>
+        <button type="submit" onclick="Addparty()"> Add Party</button>
 
     </form>
+    </div>
     <script src = "./index.js"></script>
 </body>
 </html>
