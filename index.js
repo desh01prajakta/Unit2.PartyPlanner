@@ -1,3 +1,11 @@
+const COHORT = "REPLACE_ME!";
+const API_URL =
+  "https://fsa-crud-2aa9294fe819.herokuapp.com/api/2310-fsa-et-web-pt-sf-b-prajakta/events";
+
+const state = {
+  events: [],
+};
+
 document.addEventListener("DOMContentLoaded", function () {
   const partyForm = document.getElementById("newPartyForm");
 
@@ -65,39 +73,55 @@ document.addEventListener("DOMContentLoaded", function () {
 
 async function getParties() {
   try {
-    const response = await fetch(
-      "https://fsa-crud-2aa9294fe819.herokuapp.com/api/2109-CPU-RM-WEB-PT/events"
-    );
-    const data = await response.json();
-    return data;
+    const response = await fetch(API_URL);
+    const responseJson = await response.json();
+    const events = responseJson.data;
+    //console.log(events)
+    state.events = events;
+    console.log(state.events);
+    //const jsonResponse1 = await response.json();
+    // state.events = jasonResponse1.data;
+    //const result = jsonResponse
+    // return result;
   } catch (error) {
     console.error(error.message);
   }
 }
 getParties();
 
-async function postParties(data) {
+/*async function postParties() {
   try {
-    const response = await fetch(
-      "https://fsa-crud-2aa9294fe819.herokuapp.com/api/2109-CPU-RM-WEB-PT/events",
-      {
-        method: "POST", // or 'PUT'
-        headers: {
+    const postPartyResponse = await fetch(
+        "https://fsa-crud-2aa9294fe819.herokuapp.com/api/2109-CPU-RM-WEB-PT-prajakta/events",{
+            method: "POST",
+             headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
-      }
-    );
-    //const data = await response.json();
-    const result = await response.json();
-    console.log("Success:", result);
-  } catch (error) {
-    console.error("Error:", error);
+      });
+    const jsonResponse = await response.json();
+    const party = jsonResponse
+    return party
+      } catch (error) {
+    console.error(error.message);
   }
-}
+}*/
 
 const data = { username: "example" };
 
+async function postParties() {
+  try {
+    const response = await fetch(API_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    const jsonResponse = await response.json();
+    const result = jsonResponse;
+    return result;
+  } catch (error) {
+    console.error(error.message);
+  }
+}
 postParties();
-
-getParties();
