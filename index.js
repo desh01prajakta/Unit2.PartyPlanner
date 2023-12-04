@@ -6,7 +6,7 @@ const state = {
   events: [],
 };
 
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", async function () {
   const partyForm = document.getElementById("newPartyForm");
 
   let parties = [
@@ -29,99 +29,130 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function renderPartyList(parties) {
     const partyList = document.getElementById("partyList");
-    partyList.innerHTML = "";
+   // parties.addEventListener('click', function(parties))
+       partyList.innerHTML = "";
     parties.forEach((party, index) => {
       const partyItem = document.createElement("div");
       partyItem.className = "partyItem";
       partyItem.innerHTML = `<strong>${party.name}</strong><br>
         date:${party.date}<br>
-        time:${party.time}<br>
         location:${party.location}<br>
-        description:${description}<br>
-        <button oneClick ="deleteParty(${index})">Delete</button>
+        description:${party.description}<br>
+        <button oneClick ="deleteParty(${party.id})">Delete</button>
         `;
       partyList.appendChild(partyItem);
     });
   }
-
-  renderPartyList(parties);
-
-  window.deleteparty = function (index) {
-    parties.splice(index, 1);
-    renderPartyList();
-  };
-  const button = document.querySelector("button");
-  button.addEventListener("submit", function (event) {
-    event.preventDefault();
-    const newName = document.getElementById("partyName").value;
-    const newDate = document.getElementById("date").value;
-    const newLocation = document.getElementById("location").value;
-    const newTime = document.getElementById("time").value;
-    const newDescription = document.getElementById("description");
-    parties.push({
-      name: newName,
-      date: newDate,
-      time: newTime,
-      location: newLocation,
-      description: newDescription,
-    });
-    renderPartyList();
-    partyForm.reset();
-  });
-  //renderPartyList();
-});
-
-async function getParties() {
-  try {
-    const response = await fetch(API_URL);
-    const responseJson = await response.json();
-    const events = responseJson.data;
-    //console.log(events)
-    state.events = events;
-    console.log(state.events);
-    //const jsonResponse1 = await response.json();
-    // state.events = jasonResponse1.data;
-    //const result = jsonResponse
-    // return result;
-  } catch (error) {
-    console.error(error.message);
+  async function getParties() {
+    try {
+      const response = await fetch(API_URL);
+      const responseJson = await response.json();
+      const events = responseJson.data;
+      //console.log(events)
+      state.events = events;
+      console.log(state.events);
+      //const jsonResponse1 = await response.json();
+      // state.events = jasonResponse1.data;
+      //const result = jsonResponse
+      // return result;
+    } catch (error) {
+      console.error(error.message);
+    }
   }
-}
-getParties();
+  await getParties();
+  renderPartyList(state.events);
 
-/*async function postParties() {
-  try {
-    const postPartyResponse = await fetch(
-        "https://fsa-crud-2aa9294fe819.herokuapp.com/api/2109-CPU-RM-WEB-PT-prajakta/events",{
-            method: "POST",
-             headers: {
+  // window.deleteparty = function (index) {
+    // //parties.splice(index, 1);
+     //renderPartyList();
+   //};
+ //const button = document.querySelector("button");
+//   button.addEventListener("submit", function (event) {
+//     event.preventDefault();
+//     const newName = document.getElementById("partyName").value;
+//     const newDate = document.getElementById("date").value;
+//     const newLocation = document.getElementById("location").value;
+//     const newTime = document.getElementById("time").value;
+//     const newDescription = document.getElementById("description");
+//     parties.push({
+//       name: newName,
+//       date: newDate,
+//       time: newTime,
+//       location: newLocation,
+//       description: newDescription,
+//     });
+//     renderPartyList();
+//     partyForm.reset();
+//   });
+  //renderPartyList();
+  renderPartyList(state.events)
+})
+
+
+
+async function postParties(data) {
+    try {
+      const response = await fetch(API_URL, {
+        method: "POST",
+        headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(data),
       });
-    const jsonResponse = await response.json();
-    const party = jsonResponse
-    return party
-      } catch (error) {
-    console.error(error.message);
+      const jsonResponse = await response.json();
+      const result = jsonResponse;
+      return result;
+    } catch (error) {
+      console.error(error.message);
+    }
   }
-}*/
+  
 
-const data = { username: "example" };
 
-async function postParties() {
-  try {
-    const response = await fetch(API_URL, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const jsonResponse = await response.json();
-    const result = jsonResponse;
-    return result;
-  } catch (error) {
-    console.error(error.message);
-  }
+let name = []
+const data = { id: 1,
+    name: "Event Name",
+    description: "This is a description of the event.",
+    date: "2021-09-30T00:00:00.000Z", // Date ISO string
+    location: "123 Street" };
+
+let new_event_name;
+let new_date;
+let new_time;
+let new_location;
+let new_description;
+
+
+function postUserData(){
+     new_event_name  = document.getElementById("partyName");
+     new_date = document.getElementById("date");
+     new_time = document.getElementById("time");
+     new_location = document.getElementById("location");
+     new_description = document.getElementById("description");
+     let new_event_json = {
+        name: new_event_name,
+        description: new_description,
+        date: new_date, // Date ISO string
+        location: new_location
+      }
+     postParties(new_event_json)
 }
-postParties();
+
+async function deleteParty(id){
+    try {
+          const response = await fetch(`${API_URL} ${'/'} ${id}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json"}
+          })
+          const responseJson = await response.json();
+          const events = responseJson.data;
+          state.events = events;
+          console.log(state.events);
+    } 
+    catch (error) {
+          console.error(error.message);
+        }
+      }
+      
+    
