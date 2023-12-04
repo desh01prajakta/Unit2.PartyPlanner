@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   function renderPartyList(parties) {
     const partyList = document.getElementById("partyList");
-   // parties.addEventListener('click', function(parties))
+       // parties.addEventListener('click', function(parties))
        partyList.innerHTML = "";
     parties.forEach((party, index) => {
       const partyItem = document.createElement("div");
@@ -38,7 +38,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         date:${party.date}<br>
         location:${party.location}<br>
         description:${party.description}<br>
-        <button oneClick ="deleteParty(${party.id})">Delete</button>
+        <button oneClick ="click(${party.id})">Delete</button>
         `;
       partyList.appendChild(partyItem);
     });
