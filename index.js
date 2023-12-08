@@ -38,11 +38,12 @@ document.addEventListener("DOMContentLoaded", async function () {
         date:${party.date}<br>
         location:${party.location}<br>
         description:${party.description}<br>
-        <button oneClick ="click(${party.id})">Delete</button>
+        <button onclick ="deleteParty(${party.id})">Delete</button>
         `;
       partyList.appendChild(partyItem);
     });
   }
+  
   async function getParties() {
     try {
       const response = await fetch(API_URL);
