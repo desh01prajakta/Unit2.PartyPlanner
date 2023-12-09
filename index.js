@@ -11,6 +11,7 @@ document.addEventListener("DOMContentLoaded", async function () {
 
   let parties = [
     {
+      id: 1,
       name: "eva",
       date: "2023-12-01",
       time: "18:00",
@@ -18,6 +19,7 @@ document.addEventListener("DOMContentLoaded", async function () {
       description: "lorem ipsum",
     },
     {
+      id: 2,
       name: "john",
       date: "2023-12-06",
       time: "19:00",
@@ -38,12 +40,22 @@ document.addEventListener("DOMContentLoaded", async function () {
         date:${party.date}<br>
         location:${party.location}<br>
         description:${party.description}<br>
-        <button onclick ="deleteParty(${party.id})">Delete</button>
+        <button class = "deleteButton">Delete</button>
         `;
       partyList.appendChild(partyItem);
+      const deleteButton = partyItem.querySelector('.deleteButton');
+      deleteButton.addEventListener('click', () => deleteParty(party.id));
     });
   }
-  
+  function deleteParty (partyId){
+    console.log('deleting party with ID: ${partyId}')
+    const partyIndex = parties.findIndex(party => party.id === partyId);
+    if(partyIndex !== -1){
+    parties.splice(partyIndex, 1);
+    renderPartyList();
+    }
+  }
+
   async function getParties() {
     try {
       const response = await fetch(API_URL);
@@ -139,7 +151,7 @@ function postUserData(){
      postParties(new_event_json)
 }
 
-async function deleteParty(id){
+/*async function deleteParty(id){
     try {
           const response = await fetch(`${API_URL} ${'/'} ${id}`, {
           method: "DELETE",
@@ -155,5 +167,6 @@ async function deleteParty(id){
           console.error(error.message);
         }
       }
+      */
       
     
