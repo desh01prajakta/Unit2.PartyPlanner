@@ -47,14 +47,16 @@ document.addEventListener("DOMContentLoaded", async function () {
       deleteButton.addEventListener('click', () => deleteParty(party.id));
     });
   }
-  function deleteParty (partyId){
+  function deleteParty (){
     console.log('deleting party with ID: ${partyId}')
-    const partyIndex = parties.findIndex(party => party.id === partyId);
-    if(partyIndex !== -1){
-    parties.splice(partyIndex, 1);
-    renderPartyList();
+
+    //parties = parties.filter(party=> parties.id !== partyId);
+    //const partyIndex = parties.findIndex(party => party.id === partyId);
+    //if(partyIndex !== -1){
+    //parties.splice(partyIndex, 1);
+    //renderPartyList();
     }
-  }
+  //renderPartyList()
 
   async function getParties() {
     try {
