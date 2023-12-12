@@ -7,6 +7,7 @@ const state = {
 };
 
   const partyForm = document.getElementById("newPartyForm");
+  //mock party data
 
   let parties = [
     {
@@ -27,6 +28,8 @@ const state = {
     },
   ];
   console.log(parties);
+  
+  //render data
 
   function renderPartyList(parties) {
     const partyList = document.getElementById("partyList");
@@ -46,6 +49,7 @@ const state = {
     });
   }
   
+  //Fetch:Fetch is used correctly to GET party data from the API.
   async function getParties() {
     try {
       const response = await fetch(API_URL);
@@ -65,6 +69,7 @@ const state = {
   }
   renderPartyList(state.events)
 
+// Fetch:Fetch is used correctly to POST a new party to the API.
 async function postParties(data) {
     try {
       const response = await fetch(API_URL, {
@@ -120,7 +125,7 @@ let new_description;
      new_description.value = "";
      await inIt()
 }
-
+//Fetch:Fetch is used correctly to DELETE a party from the API.
 async function deleteParty(id){
     try {
       console.log(id)
